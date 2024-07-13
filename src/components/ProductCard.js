@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+
 const ProductCard = ({ description, title, thumbnail, id }) => {
   const navigate = useNavigate();
 
