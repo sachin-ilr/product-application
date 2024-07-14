@@ -6,6 +6,7 @@ const ProductDetails = () => {
   const params = useParams();
   console.log(location, "this is locattion");
   console.log(params, "this is params");
+
   return <div>ProductDetails</div>;
 };
 

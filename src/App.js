@@ -1,12 +1,14 @@
 import { useState } from "react";
 import "./App.css";
-import Header from "./components/Header";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Cart from "./pages/Cart";
 import Navbar from "./components/Navbar";
 import ProductDetails from "./pages/ProductDetails";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 const Layout = () => {
   return (
     <div>
@@ -44,9 +46,9 @@ function App() {
   ]);
 
   return (
-    <div className="App">
+    <Provider store={store}>
       <RouterProvider router={router} />
-    </div>
+    </Provider>
   );
 }
 

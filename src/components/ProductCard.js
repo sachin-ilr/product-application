@@ -28,7 +28,7 @@ const ProductCard = ({ description, title, thumbnail, id }) => {
       <CardActions>
         <Button size="small">Add</Button>
         <Button size="small" onClick={handleProductDtls}>
-          Learn More
+          View More
         </Button>
       </CardActions>
     </Card>
