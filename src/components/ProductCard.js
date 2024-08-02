@@ -1,17 +1,28 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import React from "react";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+} from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/reducer/products";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
-const ProductCard = ({ description, title, thumbnail, id }) => {
+const ProductCard = ({ description, title, thumbnail, price, id }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleProductDtls = () => {
-    navigate(`/products/${id}?login=true`);
+  const handleProductDetails = () => {
+    navigate(`/products/${id}`);
+  };
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ id, title, price }));
   };
 
   return (
@@ -24,14 +35,20 @@ const ProductCard = ({ description, title, thumbnail, id }) => {
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Price: ${price}
+        </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Add</Button>
-        <Button size="small" onClick={handleProductDtls}>
+        <Button size="small" onClick={handleAddToCart}>
+          <AddShoppingCartIcon />
+        </Button>
+        <Button size="small" onClick={handleProductDetails}>
           View More
         </Button>
       </CardActions>
     </Card>
   );
 };
+
 export default ProductCard;

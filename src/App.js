@@ -27,22 +27,22 @@ function App() {
       children: [
         {
           path: "/",
-          element: <Home />
+          element: <Home />,
         },
         {
           path: "/about",
-          element: <About />
+          element: <About />,
         },
         {
           path: "/cart",
-          element: <Cart />
+          element: <Cart />,
         },
         {
           path: "/products/:id",
-          element: <ProductDetails />
-        }
-      ]
-    }
+          element: <ProductDetails />,
+        },
+      ],
+    },
   ]);
 
   return (

@@ -35,7 +35,7 @@ function Header(props) {
     <Wrapper>
       <p
         style={{
-          color: clicked ? "green" : "red"
+          color: clicked ? "green" : "red",
         }}
       >
         {props.name}

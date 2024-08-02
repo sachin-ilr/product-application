@@ -14,18 +14,22 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
 const navItems = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-  { name: "Cart", path: "/cart" }
+  { name: "Cart", path: "/cart" },
 ];
 
 const Navbar = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const cart = useSelector((state) => state.products.cart);
+
+  const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -34,7 +38,7 @@ const Navbar = (props) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        MUI
+        LOL
       </Typography>
       <Divider />
       <List>
@@ -55,7 +59,7 @@ const Navbar = (props) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar component="nav">
+      <AppBar component="nav" sx={{ backgroundColor: "#607d8b" }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -71,7 +75,7 @@ const Navbar = (props) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            MUI
+            Scam Shopping
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
@@ -81,7 +85,9 @@ const Navbar = (props) => {
                 sx={{ color: "#fff" }}
                 to={item.path}
               >
-                {item.name}
+                {item.name === "Cart"
+                  ? item.name + " (" + cartItemCount + ") "
+                  : item.name}
               </Button>
             ))}
           </Box>
@@ -94,14 +100,14 @@ const Navbar = (props) => {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true // Better open performance on mobile.
+            keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth
-            }
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}
@@ -115,11 +121,7 @@ const Navbar = (props) => {
 };
 
 Navbar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func
+  window: PropTypes.func,
 };
 
 export default Navbar;
