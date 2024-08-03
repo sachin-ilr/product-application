@@ -1,127 +1,45 @@
-import * as React from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
-import Drawer from "@mui/material/Drawer";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Badge from "@mui/material/Badge";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import HomeIcon from "@mui/icons-material/Home";
+import InfoIcon from "@mui/icons-material/Info";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const drawerWidth = 240;
-
-const navItems = [
-  { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
-  { name: "Cart", path: "/cart" },
-];
-
-const Navbar = (props) => {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+const Navbar = () => {
   const cart = useSelector((state) => state.products.cart);
-
-  const cartItemCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
-  };
-
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        LOL
-      </Typography>
-      <Divider />
-      <List>
-        {navItems.map((item) => (
-          <ListItem key={item.name} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <Link to={item.path}>{item.name}</Link>
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-      <AppBar component="nav" sx={{ backgroundColor: "#607d8b" }}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+            <IconButton edge="start" color="inherit" aria-label="home">
+              <HomeIcon />
+            </IconButton>
+            Scam Store
+          </Link>
+        </Typography>
+        <Link to="/about" style={{ color: "inherit", textDecoration: "none" }}>
+          <IconButton color="inherit">
+            <InfoIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-          >
-            Scam Shopping
-          </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button
-                component={Link}
-                key={item.name}
-                sx={{ color: "#fff" }}
-                to={item.path}
-              >
-                {item.name === "Cart"
-                  ? item.name + " (" + cartItemCount + ") "
-                  : item.name}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <nav>
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </nav>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-      </Box>
-    </Box>
+        </Link>
+        <Link to="/cart" style={{ color: "inherit", textDecoration: "none" }}>
+          <IconButton color="inherit">
+            <Badge badgeContent={cartCount} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Link>
+      </Toolbar>
+    </AppBar>
   );
-};
-
-Navbar.propTypes = {
-  window: PropTypes.func,
 };
 
 export default Navbar;

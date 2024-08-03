@@ -1,16 +1,20 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { addToCart } from "../redux/reducer/products";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
+import {
+  Button,
+  Typography,
+  Container,
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Box,
+} from "@mui/material";
+import axios from "axios";
 
 const ProductDetails = () => {
-  const location = useLocation();
   const params = useParams();
   const dispatch = useDispatch();
   const [productInfo, setProductInfo] = useState({});
@@ -33,30 +37,46 @@ const ProductDetails = () => {
   }, [params.id]);
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ id: productInfo.id, title: productInfo.title, price: productInfo.price }));
+    dispatch(addToCart(productInfo));
   };
 
   return (
-    <Card>
-      <CardMedia
-        component="img"
-        height="140"
-        image={productInfo.thumbnail}
-        alt={productInfo.title}
-      />
-      <CardContent>
-        <Typography variant="h5">{productInfo.title}</Typography>
-        <Typography variant="body2" color="text.secondary">
-          {productInfo.description}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Price: ${productInfo.price}
-        </Typography>
-        <Button variant="contained" onClick={handleAddToCart}>
-          Add to Cart
-        </Button>
-      </CardContent>
-    </Card>
+    <Container maxWidth="lg" sx={{ mt: 4 }}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardMedia
+              component="img"
+              height="400"
+              image={productInfo.thumbnail}
+              alt={productInfo.title}
+              sx={{ objectFit: "contain" }}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <Box>
+            <Typography variant="h4" gutterBottom>
+              {productInfo.title}
+            </Typography>
+            <Typography variant="h6" color="text.secondary" gutterBottom>
+              ${productInfo.price}
+            </Typography>
+            <Typography variant="body1" paragraph>
+              {productInfo.description}
+            </Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleAddToCart}
+              size="large"
+            >
+              Add to Cart
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
+    </Container>
   );
 };
 
